@@ -1,0 +1,31 @@
+#
+# Initialize an empty array before tasks
+#
+vars:
+  sample_array: []
+
+#
+# Append strings from a json output in a task
+#
+- name: Append strings to the array
+  set_fact:
+    sample_array: "{{ sample_array + [ item ] }}"
+  loop: "{{json_domain.json.members}}"
+
+#
+# If item is a dictionary and we only interested in
+# the first member of this dictionary
+#
+- name: Append strings to the array
+  set_fact:
+    sample_array: "{{ sample_array + [ item ] }}"
+  loop: "{{json_domain.json.members}}"
+
+#
+# if item is a dictionary we can also use a key to
+# append it's value to the sample_array list
+#
+- name: Append strings to the array
+  set_fact:
+    sample_array: "{{ sample_array + [ item[\"key_value\"] ] }}"
+  loop: "{{json_domain.json.members}}"
